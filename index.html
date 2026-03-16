@@ -3,164 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Academy with Certification</title>
+    <title>DevCanvas | HTML Masterclass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --w3-green: #04AA6D; --w3-dark: #282a35; --w3-light: #f1f1f1; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: #fff; }
-
-        header { background: white; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; }
-        .logo { color: var(--w3-green); font-size: 24px; font-weight: 900; text-decoration: none; flex-grow: 1; }
-
-        .container { display: flex; flex: 1; overflow: hidden; }
-        .sidebar { width: 220px; background: var(--w3-light); overflow-y: auto; border-right: 1px solid #ddd; }
-        .sidebar a { display: block; padding: 10px 15px; color: black; text-decoration: none; font-size: 14px; cursor: pointer; border-bottom: 1px solid #e5e5e5; }
-        .sidebar a:hover { background-color: #ddd; }
-        .sidebar a.active { background: var(--w3-green); color: white; }
-
-        main { flex: 1; overflow-y: auto; padding: 30px; }
-        .section { margin-bottom: 40px; }
-        
-        /* Editor Styles */
-        .example-box { background: #E7E9EB; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 5px solid var(--w3-green); }
-        .editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        textarea { width: 100%; height: 200px; font-family: 'Consolas', monospace; padding: 10px; border: 1px solid #ccc; }
-        iframe { width: 100%; height: 200px; background: white; border: 1px solid #ccc; }
-        
-        /* Quiz Styles */
-        #quiz-container { background: #f9f9f9; padding: 30px; border-radius: 10px; border: 2px dashed #ccc; margin-top: 50px; }
-        .question { margin-bottom: 20px; font-weight: bold; }
-        .btn { background: var(--w3-green); color: white; border: none; padding: 12px 25px; cursor: pointer; font-weight: bold; border-radius: 5px; margin-top: 10px; }
-
-        /* Certificate Styles */
-        #certificate { 
-            display: none; 
-            width: 700px; 
-            height: 500px; 
-            padding: 50px; 
-            text-align: center; 
-            border: 20px solid var(--w3-green); 
-            background: white; 
-            margin: 50px auto; 
-            position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        :root { 
+            --accent: #10b981; 
+            --accent-soft: rgba(16, 185, 129, 0.1);
+            --bg: #0f172a; 
+            --card: #1e293b;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.05);
         }
-        #certificate h1 { font-size: 50px; color: var(--w3-dark); }
-        #certificate h2 { font-size: 20px; color: #666; }
-        #certificate .name { font-size: 40px; color: var(--w3-green); font-family: 'Georgia', serif; border-bottom: 2px solid #ccc; display: inline-block; padding: 0 50px; margin: 20px 0; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: radial-gradient(circle at top left, #1e293b, #0f172a);
+            color: var(--text-main); height: 100vh; display: flex; overflow: hidden;
+        }
+
+        /* Modern Navigation Rail */
+        nav { 
+            width: 280px; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 2rem 1.5rem;
+        }
+        .brand { font-weight: 800; font-size: 1.5rem; color: var(--accent); margin-bottom: 2.5rem; display: flex; align-items: center; gap: 10px; }
+        
+        .menu-scroll { flex: 1; overflow-y: auto; padding-right: 5px; }
+        .menu-scroll::-webkit-scrollbar { width: 4px; }
+        .menu-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        h4 { font-size: 0.7rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em; margin: 1.5rem 0 0.75rem; }
+        
+        .nav-link { 
+            display: flex; align-items: center; padding: 0.8rem 1rem; color: var(--text-dim); 
+            text-decoration: none; font-size: 0.9rem; font-weight: 500; border-radius: 12px; margin-bottom: 4px; cursor: pointer;
+        }
+        .nav-link:hover { background: var(--border); color: var(--text-main); }
+        .nav-link.active { background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(16, 185, 129, 0.2); }
+
+        /* Content Container */
+        main { flex: 1; overflow-y: auto; padding: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .header-content h1 { font-size: 3rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+        .header-content p { color: var(--text-dim); font-size: 1.1rem; max-width: 600px; }
+
+        /* The Editor Card */
+        .glass-card { 
+            background: var(--card); border: 1px solid var(--border); border-radius: 24px; 
+            padding: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .editor-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .run-btn { 
+            background: var(--accent); color: #000; border: none; padding: 0.75rem 1.5rem; 
+            font-weight: 700; border-radius: 14px; cursor: pointer; font-size: 0.9rem;
+        }
+        .run-btn:hover { transform: scale(1.05); filter: brightness(1.1); box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+
+        .editor-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        textarea { 
+            background: #000; color: #a5d6ff; border: 1px solid var(--border); border-radius: 16px; 
+            padding: 1.5rem; height: 350px; font-family: 'JetBrains Mono', monospace; font-size: 14px; outline: none; resize: none;
+        }
+        iframe { background: white; border-radius: 16px; border: none; height: 350px; width: 100%; }
+
+        /* Quiz UI */
+        #exam-section { margin-top: 4rem; padding: 3rem; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 32px; border: 1px solid var(--accent); }
+        .q-card { background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 16px; margin-bottom: 1rem; }
+        input[type="text"] { width: 100%; padding: 1rem; background: #000; border: 1px solid var(--border); border-radius: 12px; color: white; margin-top: 10px; }
+
+        /* Certificate */
+        #certificate { 
+            display: none; padding: 5rem; text-align: center; background: #fff; color: #000;
+            border-radius: 4px; max-width: 900px; margin: 2rem auto; position: relative;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.4);
+        }
+        .cert-name { font-size: 3.5rem; font-weight: 800; border-bottom: 3px solid var(--accent); display: inline-block; margin: 2rem 0; }
+
+        @media (max-width: 1000px) { nav { display: none; } .editor-split { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="#" class="logo">HTML MASTER PRO</a>
-    <div style="font-size: 12px;">Complete the Quiz for a Certificate</div>
-</header>
+<nav>
+    <div class="brand"><span>◈</span> DevCanvas</div>
+    <div class="menu-scroll">
+        <h4>Fundamentals</h4>
+        <div onclick="loadTopic('home')" class="nav-link active" id="l-home">🏠 Welcome</div>
+        <div onclick="loadTopic('intro')" class="nav-link" id="l-intro">📖 Introduction</div>
+        <div onclick="loadTopic('elements')" class="nav-link" id="l-elements">🧱 Elements</div>
+        <div onclick="loadTopic('attributes')" class="nav-link" id="l-attributes">🏷️ Attributes</div>
+        
+        <h4>Structure</h4>
+        <div onclick="loadTopic('headings')" class="nav-link" id="l-headings">Title Tags</div>
+        <div onclick="loadTopic('paragraphs')" class="nav-link" id="l-paragraphs">Paragraphs</div>
+        <div onclick="loadTopic('styles')" class="nav-link" id="l-styles">CSS Inline</div>
+        <div onclick="loadTopic('formatting')" class="nav-link" id="l-formatting">Text Format</div>
 
-<div class="container">
-    <aside class="sidebar">
-        <a onclick="loadTopic('home')" id="link-home" class="active">HTML Home</a>
-        <a onclick="loadTopic('elements')" id="link-elements">HTML Elements</a>
-        <a onclick="loadTopic('attributes')" id="link-attributes">HTML Attributes</a>
-        <a onclick="loadTopic('forms')" id="link-forms">HTML Forms</a>
-        <a href="#quiz-container" style="background:#ffc0c7; font-weight:bold;">🏆 FINAL EXAM</a>
-    </aside>
+        <h4>Interaction</h4>
+        <div onclick="loadTopic('links')" class="nav-link" id="l-links">Hyperlinks</div>
+        <div onclick="loadTopic('images')" class="nav-link" id="l-images">Graphics</div>
+        <div onclick="loadTopic('tables')" class="nav-link" id="l-tables">Data Tables</div>
+        <div onclick="loadTopic('lists')" class="nav-link" id="l-lists">List Groups</div>
+        <div onclick="loadTopic('forms')" class="nav-link" id="l-forms">Input Forms</div>
 
-    <main>
-        <div class="section">
-            <h1 id="title">HTML Home</h1>
-            <p id="desc">Learn HTML by doing.</p>
-            <div class="example-box">
-                <button class="btn" onclick="runCode()">Run Code ❯</button>
-                <div class="editor-grid" style="margin-top:10px;">
-                    <textarea id="code-input"></textarea>
-                    <iframe id="result-frame"></iframe>
-                </div>
-            </div>
+        <a href="#exam-section" class="nav-link" style="color: #fb7185; margin-top: 2rem; border: 1px solid #fb7185;">🏁 Final Exam</a>
+    </div>
+</nav>
+
+<main>
+    <div class="header-content">
+        <h1 id="title">Architecture Home</h1>
+        <p id="desc">Build the skeleton of the modern web with semantic HTML5.</p>
+    </div>
+
+    <div class="glass-card">
+        <div class="editor-top">
+            <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--text-dim);">editor.main.html</span>
+            <button class="run-btn" onclick="runCode()">Compile & Run ❯</button>
         </div>
-
-        <div id="quiz-container">
-            <h2>🏆 HTML Final Certification Quiz</h2>
-            <p>You must score 100% to get your certificate. One wrong answer = Restart!</p>
-            <hr>
-            <div id="quiz-content">
-                </div>
-            <button class="btn" onclick="checkQuiz()">Submit & Get Certificate</button>
+        <div class="editor-split">
+            <textarea id="code-input" spellcheck="false"></textarea>
+            <iframe id="result-frame"></iframe>
         </div>
+    </div>
 
-        <div id="certificate">
-            <h2>CERTIFICATE OF COMPLETION</h2>
-            <p>This is to certify that</p>
-            <div class="name" id="cert-name">STUDENT NAME</div>
-            <p>has successfully completed the</p>
-            <h1>HTML MASTER COURSE</h1>
-            <p id="cert-date"></p>
-            <div style="margin-top:40px; font-weight:bold; color:var(--w3-green);">VERIFIED BY HTML MASTER ACADEMY</div>
-        </div>
-    </main>
-</div>
+    <div id="exam-section">
+        <h2>Developer Certification</h2>
+        <p style="margin-bottom: 2rem;">Pass this integrity check with 100% accuracy to generate your credential.</p>
+        <div id="quiz-content"></div>
+        <button class="run-btn" onclick="checkQuiz()" style="width: 100%; margin-top: 2rem; height: 60px;">Request Graduation</button>
+    </div>
+
+    <div id="certificate">
+        <div style="letter-spacing: 0.3em; font-weight: 600; color: #64748b;">OFFICIAL CREDENTIAL</div>
+        <p style="margin-top: 2rem;">This document confirms that</p>
+        <div class="cert-name" id="c-name">Full Name</div>
+        <p>is now a verified</p>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0;">FULL-STACK HTML ARCHITECT</h1>
+        <p id="c-date" style="color: #94a3b8;"></p>
+        <div style="margin-top: 4rem; font-weight: bold; color: var(--accent);">DevCanvas Academy • 2026</div>
+    </div>
+</main>
 
 <script>
     const topics = {
-        home: { title: "HTML Home", desc: "HTML is the standard markup language.", code: "<h1>Hello World</h1>" },
-        elements: { title: "Elements", desc: "Tags like h1, p, and br.", code: "<p>Text <b>Bold</b></p>" },
-        attributes: { title: "Attributes", desc: "href, src, alt, style.", code: "<a href='#'>Click Me</a>" },
-        forms: { title: "Forms", desc: "Input types and labels.", code: "<input type='text' placeholder='Name'>" }
+        home: { title: "Architecture Home", desc: "HTML is the standard markup language for documents designed to be displayed in a web browser.", code: "<h1>Modern Web</h1>\n<p>Start your journey by editing this code.</p>" },
+        intro: { title: "Introduction", desc: "HTML stands for Hyper Text Markup Language.", code: "<h2>What is HTML?</h2>\n<p>It defines the structure of web pages.</p>" },
+        elements: { title: "Elements", desc: "Elements are the building blocks of HTML.", code: "<b>Bold Text</b><br><i>Italic Text</i>" },
+        attributes: { title: "Attributes", desc: "Attributes provide additional info about elements.", code: "<a href='https://google.com'>Visit Website</a>" },
+        headings: { title: "Headings", desc: "Six levels of section headings.", code: "<h1>H1 Heading</h1>\n<h2>H2 Heading</h2>" },
+        paragraphs: { title: "Paragraphs", desc: "The p tag for text blocks.", code: "<p>This is a paragraph.</p>" },
+        styles: { title: "Inline Styles", desc: "Changing colors and fonts directly.", code: "<p style='color:teal;'>Custom Style</p>" },
+        formatting: { title: "Text Formatting", desc: "Bold, Important, Subscript etc.", code: "<strong>Strong Text</strong>" },
+        links: { title: "Hyperlinks", desc: "Connecting the web via 'a' tags.", code: "<a href='#'>Internal Link</a>" },
+        images: { title: "Media & Images", desc: "Displaying visual assets.", code: "<img src='https://via.placeholder.com/100' alt='logo'>" },
+        tables: { title: "Data Tables", desc: "Organizing complex data.", code: "<table><tr><th>ID</th></tr><tr><td>1</td></tr></table>" },
+        lists: { title: "Lists", desc: "Bullet points and numbered items.", code: "<ul><li>Item 1</li></ul>" },
+        forms: { title: "Forms", desc: "Capturing user input.", code: "<input type='text' placeholder='Search...'>" }
     };
 
     const quizData = [
         { q: "Which tag is used for the largest heading?", a: "h1" },
-        { q: "Which tag is used for a line break?", a: "br" },
-        { q: "What is the correct attribute for a link destination?", a: "href" },
-        { q: "Which character is used to indicate an end tag?", a: "/" },
-        { q: "Which tag defines an unordered list?", a: "ul" }
+        { q: "Tag for a single line break?", a: "br" },
+        { q: "Attribute for link URL?", a: "href" },
+        { q: "Tag for an unordered list?", a: "ul" },
+        { q: "Tag for a table data cell?", a: "td" }
     ];
-
-    function loadQuiz() {
-        let html = "";
-        quizData.forEach((item, index) => {
-            html += `<div class="question">${index + 1}. ${item.q}</div>
-                     <input type="text" id="q${index}" style="padding:8px; width:200px;" placeholder="Answer here...">`;
-        });
-        document.getElementById('quiz-content').innerHTML = html;
-    }
-
-    function checkQuiz() {
-        let score = 0;
-        quizData.forEach((item, index) => {
-            const userAns = document.getElementById(`q${index}`).value.toLowerCase().trim();
-            if (userAns === item.a) score++;
-        });
-
-        if (score === quizData.length) {
-            const name = prompt("Congratulations! 100% Score! Enter your name for the certificate:");
-            showCertificate(name);
-        } else {
-            alert(`You got ${score}/${quizData.length} correct. You failed! The quiz will now restart.`);
-            loadQuiz(); // Restart
-        }
-    }
-
-    function showCertificate(name) {
-        document.getElementById('quiz-container').style.display = "none";
-        document.getElementById('cert-name').innerText = name || "Web Developer";
-        document.getElementById('cert-date').innerText = new Date().toDateString();
-        document.getElementById('certificate').style.display = "block";
-        window.scrollTo(0, document.body.scrollHeight);
-    }
 
     function loadTopic(key) {
         document.getElementById('title').innerText = topics[key].title;
         document.getElementById('desc').innerText = topics[key].desc;
         document.getElementById('code-input').value = topics[key].code;
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        document.getElementById('l-' + key).classList.add('active');
         runCode();
     }
 
     function runCode() {
         const code = document.getElementById('code-input').value;
         const iframe = document.getElementById('result-frame');
-        const frameDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const frameDoc = iframe.contentWindow.document;
         frameDoc.open(); frameDoc.write(code); frameDoc.close();
+    }
+
+    function loadQuiz() {
+        let html = "";
+        quizData.forEach((item, i) => {
+            html += `<div class="q-card"><b>${i+1}. ${item.q}</b><br><input type="text" id="ans${i}" placeholder="Enter tag name"></div>`;
+        });
+        document.getElementById('quiz-content').innerHTML = html;
+    }
+
+    function checkQuiz() {
+        let score = 0;
+        quizData.forEach((item, i) => {
+            if (document.getElementById(`ans${i}`).value.toLowerCase().trim() === item.a) score++;
+        });
+
+        if (score === quizData.length) {
+            const name = prompt("Exam Passed! Enter name for certificate:");
+            document.getElementById('c-name').innerText = name || "Architect";
+            document.getElementById('c-date').innerText = new Date().toDateString();
+            document.getElementById('exam-section').style.display = "none";
+            document.getElementById('certificate').style.display = "block";
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        } else {
+            alert(`Fail: ${score}/5. The exam will reset. Try again.`);
+            loadQuiz();
+        }
     }
 
     window.onload = () => { loadTopic('home'); loadQuiz(); };
