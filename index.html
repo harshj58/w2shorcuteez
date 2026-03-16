@@ -2,163 +2,167 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Intelligence OS Master</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W3Schools Clone - Full HTML Documentation</title>
     <style>
-        body { background: #010409; color: white; font-family: system-ui; overflow: hidden; }
-        .glass { background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .app-card { transition: 0.2s; cursor: pointer; border-radius: 1.5rem; }
-        .app-card:active { transform: scale(0.95); }
-        @keyframes shake { 0%, 100% { transform: translate(0,0); } 25% { transform: translate(-4px,-4px); } 75% { transform: translate(4px,4px); } }
-        .vibrate { animation: shake 0.1s infinite; }
-        canvas { touch-action: none; background: #fff; border-radius: 1rem; width: 100%; height: 250px; }
-        ::-webkit-scrollbar { display: none; }
+        :root { --w3-green: #04AA6D; --w3-dark: #282a35; --w3-light: #f1f1f1; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; }
+
+        /* Top Bar */
+        header { background: white; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid #ddd; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .logo { color: var(--w3-green); font-size: 26px; font-weight: 900; text-decoration: none; }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: black; font-weight: 500; font-size: 15px; }
+
+        /* Main Layout */
+        .container { display: flex; flex: 1; overflow: hidden; }
+
+        /* Sidebar - Scrollable */
+        .sidebar { width: 240px; background: var(--w3-light); overflow-y: auto; padding: 20px 0; border-right: 1px solid #ddd; }
+        .sidebar h4 { padding: 0 20px; margin: 15px 0 5px; color: #555; font-size: 13px; text-transform: uppercase; }
+        .sidebar a { display: block; padding: 6px 20px; color: black; text-decoration: none; font-size: 14px; cursor: pointer; }
+        .sidebar a:hover { background-color: #ddd; }
+        .sidebar a.active { background: var(--w3-green); color: white; }
+
+        /* Content Area */
+        main { flex: 1; overflow-y: auto; padding: 40px; line-height: 1.6; }
+        .topic-title { font-size: 32px; margin-top: 0; }
+        .description { font-size: 18px; color: #555; }
+        
+        /* The Editor Preview */
+        .example-box { background: #E7E9EB; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        textarea { width: 100%; height: 250px; font-family: 'Consolas', monospace; padding: 10px; border: 1px solid #ccc; font-size: 14px; }
+        iframe { width: 100%; height: 250px; background: white; border: 1px solid #ccc; }
+        .run-btn { background: var(--w3-green); color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 10px; }
+
+        @media (max-width: 800px) {
+            .sidebar { display: none; }
+            .editor-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
 
-        const App = () => {
-            const [view, setView] = useState('auth');
-            const [activeApp, setActiveApp] = useState(null);
-            const [apiKey, setApiKey] = useState('');
-            const [vibrate, setVibrate] = useState(false);
-            const [score, setScore] = useState(0);
-            const [prices, setPrices] = useState([40, 60, 45, 80, 55, 90, 70]);
-            const [msgs, setMsgs] = useState([]);
-            const [input, setInput] = useState('');
-            const [calc, setCalc] = useState('0');
-            const [loading, setLoading] = useState(false);
-            const cvRef = useRef(null);
-            const [drawing, setDrawing] = useState(false);
+<header>
+    <a href="#" class="logo">W3Schools Clone</a>
+    <div class="nav-links">
+        <a href="#">TUTORIALS</a>
+        <a href="#">EXERCISES</a>
+        <a href="#">CERTIFICATES</a>
+    </div>
+</header>
 
-            // Universal AI Logic & Triggers
-            const trigger = (v) => {
-                const n = v.replace(/\s/g, '').toLowerCase();
-                if (n === '67') { setVibrate(true); const m = new SpeechSynthesisUtterance("6 7"); window.speechSynthesis.speak(m); setTimeout(()=>setVibrate(false), 800); }
-                if (n === '10+9=21') { setVibrate(true); const m = new SpeechSynthesisUtterance("You dumb"); m.pitch=0.5; window.speechSynthesis.speak(m); setTimeout(()=>setVibrate(false), 1000); }
-            };
+<div class="container">
+    <aside class="sidebar" id="sidebar">
+        <h4>HTML Tutorial</h4>
+        <a onclick="loadTopic('home')" class="active">HTML Home</a>
+        <a onclick="loadTopic('intro')">HTML Introduction</a>
+        <a onclick="loadTopic('elements')">HTML Elements</a>
+        <a onclick="loadTopic('attributes')">HTML Attributes</a>
+        <a onclick="loadTopic('headings')">HTML Headings</a>
+        <a onclick="loadTopic('paragraphs')">HTML Paragraphs</a>
+        <a onclick="loadTopic('styles')">HTML Styles</a>
+        <a onclick="loadTopic('formatting')">HTML Formatting</a>
+        <a onclick="loadTopic('links')">HTML Links</a>
+        <a onclick="loadTopic('images')">HTML Images</a>
+        <a onclick="loadTopic('tables')">HTML Tables</a>
+        <a onclick="loadTopic('lists')">HTML Lists</a>
+        <a onclick="loadTopic('blocks')">HTML Block & Inline</a>
+        <a onclick="loadTopic('forms')">HTML Forms</a>
+    </aside>
 
-            const handleChat = async () => {
-                if(!input.trim()) return;
-                const m = input; trigger(m);
-                setMsgs([...msgs, {role: 'user', content: m}]); setInput(''); setLoading(true);
-                try {
-                    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                        method: 'POST',
-                        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{role: "system", content: "You are Universal AI. witty and sharp."}, ...msgs.slice(-3), {role: 'user', content: m}]})
-                    });
-                    const d = await r.json();
-                    setMsgs(prev => [...prev, {role: 'assistant', content: d.choices[0].message.content}]);
-                } catch (e) { setMsgs(prev => [...prev, {role: 'assistant', content: "API Key Error."}]); }
-                setLoading(false);
-            };
+    <main id="content">
+        <h1 class="topic-title" id="title">HTML Tutorial</h1>
+        <p class="description" id="desc">HTML is the standard markup language for Web pages. With HTML you can create your own Website.</p>
+        
+        <div class="example-box">
+            <h3>Try it Yourself</h3>
+            <div class="editor-grid">
+                <div class="box">
+                    <button class="run-btn" onclick="runCode()">Run Code ❯</button>
+                    <textarea id="code-input"><!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</header>
+<body>
 
-            // Market Loop
-            useEffect(() => {
-                const i = setInterval(() => setPrices(p => [...p.slice(1), Math.floor(Math.random()*50)+25]), 2000);
-                return () => clearInterval(i);
-            }, []);
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
 
-            // Drawing Engine
-            const onDraw = (e) => {
-                if (!drawing) return;
-                const ctx = cvRef.current.getContext('2d');
-                const r = cvRef.current.getBoundingClientRect();
-                const x = (e.clientX || (e.touches && e.touches[0].clientX)) - r.left;
-                const y = (e.clientY || (e.touches && e.touches[0].clientY)) - r.top;
-                ctx.lineTo(x, y); ctx.stroke();
-            };
-
-            if (view === 'auth') return (
-                <div className="h-screen flex items-center justify-center bg-black p-6">
-                    <div className="glass p-8 rounded-[2.5rem] w-full max-w-sm text-center">
-                        <h1 className="text-2xl font-black mb-6 uppercase tracking-tighter">Intelligence OS</h1>
-                        <input type="password" placeholder="Groq API Key" className="w-full p-4 rounded-xl bg-gray-900 mb-4 text-center border border-white/10" value={apiKey} onChange={e=>setApiKey(e.target.value)} />
-                        <button onClick={() => setView('hub')} className="w-full bg-blue-600 p-4 rounded-xl font-bold uppercase">Initialize</button>
-                    </div>
+</body>
+</html></textarea>
                 </div>
-            );
-
-            const apps = [
-                {id:'uni', name:'Universal AI', i:'🧠'}, {id:'stock', name:'Stock Pulse', i:'📈'},
-                {id:'draw', name:'Sketch Pad', i:'🎨'}, {id:'game', name:'Reflex Sync', i:'🎮'},
-                {id:'math', name:'Calculator', i:'🔢'}, {id:'trans', name:'Translator', i:'🌐'},
-                {id:'med', name:'Med-AI', i:'⚕️'}, {id:'gym', name:'Gym Coach', i:'🏋️'},
-                {id:'weather', name:'Weather', i:'☁️'}, {id:'clock', name:'Clock', i:'⌚'},
-                {id:'code', name:'Terminal', i:'💻'}, {id:'chef', name:'Chef Mode', i:'🍳'}
-            ];
-
-            return (
-                <div className={`h-screen flex flex-col ${vibrate ? 'vibrate' : ''}`}>
-                    {activeApp ? (
-                        <div className="flex-1 flex flex-col bg-black">
-                            <header className="p-4 glass flex justify-between items-center">
-                                <button onClick={() => setActiveApp(null)} className="text-[10px] font-bold uppercase bg-white/10 px-4 py-1 rounded-full text-blue-400">Hub</button>
-                                <span className="font-bold uppercase text-[10px] tracking-widest">{activeApp.name}</span>
-                                <div className="w-8"></div>
-                            </header>
-                            <div className="flex-1 p-4 overflow-y-auto">
-                                {activeApp.id === 'uni' && (
-                                    <div className="h-full flex flex-col">
-                                        <div className="flex-1 glass rounded-2xl p-4 mb-4 overflow-y-auto space-y-2 text-sm">
-                                            {msgs.map((m,i) => <div key={i} className={`p-3 rounded-xl ${m.role==='user'?'bg-blue-600 ml-auto':'bg-gray-800'}`}>{m.content}</div>)}
-                                            {loading && <div className="text-blue-500 text-xs animate-pulse">Syncing...</div>}
-                                        </div>
-                                        <div className="flex gap-2"><input className="flex-1 p-3 glass rounded-xl outline-none" value={input} onChange={e=>setInput(e.target.value)} onKeyPress={e=>e.key==='Enter'&&handleChat()} /><button onClick={handleChat} className="bg-blue-600 px-4 rounded-xl font-bold uppercase text-xs">Send</button></div>
-                                    </div>
-                                )}
-                                {activeApp.id === 'stock' && (
-                                    <div className="space-y-4">
-                                        <div className="glass p-4 rounded-2xl flex justify-between items-center"><span className="text-xs font-bold text-emerald-400">GOLD</span><span className="text-2xl font-black">${2300 + prices[6]}</span></div>
-                                        <div className="glass rounded-2xl p-4 aspect-video overflow-hidden">
-                                            <svg viewBox="0 0 140 100" className="w-full h-full"><polyline fill="none" stroke="#10b981" strokeWidth="4" points={prices.map((p,i)=>`${i*23.3},${100-p}`).join(' ')}/></svg>
-                                        </div>
-                                    </div>
-                                )}
-                                {activeApp.id === 'draw' && (
-                                    <div className="h-full">
-                                        <canvas ref={cvRef} onMouseDown={(e)=>{setDrawing(true); const ctx=cvRef.current.getContext('2d'); ctx.beginPath(); ctx.lineWidth=3; ctx.strokeStyle='#000';}} onMouseMove={onDraw} onMouseUp={()=>setDrawing(false)} onTouchStart={(e)=>{setDrawing(true); const ctx=cvRef.current.getContext('2d'); ctx.beginPath();}} onTouchMove={onDraw} onTouchEnd={()=>setDrawing(false)} />
-                                        <button onClick={()=>{const c=cvRef.current; c.getContext('2d').clearRect(0,0,c.width,c.height)}} className="w-full mt-4 bg-red-600 p-3 rounded-xl font-bold uppercase text-xs">Clear</button>
-                                    </div>
-                                )}
-                                {activeApp.id === 'math' && (
-                                    <div className="grid grid-cols-4 gap-2">
-                                        <div className="col-span-4 glass p-6 rounded-xl text-right text-2xl font-black mb-2">{calc}</div>
-                                        {['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+'].map(b => (
-                                            <button key={b} onClick={() => b==='=' ? setCalc(eval(calc).toString()) : setCalc(calc==='0'?b:calc+b)} className="glass p-4 rounded-xl font-bold active:bg-blue-600">{b}</button>
-                                        ))}
-                                        <button onClick={()=>setCalc('0')} className="col-span-4 bg-red-600/20 p-3 rounded-xl text-xs font-bold text-red-500 uppercase">AC</button>
-                                    </div>
-                                )}
-                                {activeApp.id === 'game' && <div className="h-full flex flex-col items-center justify-center"><h1 className="text-6xl font-black mb-8">{score}</h1><button onPointerDown={()=>setScore(s=>s+1)} className="w-32 h-32 bg-white rounded-full active:scale-90" /></div>}
-                                {['trans','med','gym','weather','clock','code','chef'].includes(activeApp.id) && <div className="text-center glass p-10 rounded-2xl opacity-50 font-black uppercase tracking-widest text-[10px]">Module Logic Initialized</div>}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="p-6 overflow-y-auto">
-                            <h1 className="text-center text-3xl font-black uppercase tracking-tighter mb-8 italic">Intelligence OS</h1>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto pb-10">
-                                {apps.map(a=>(
-                                    <div key={a.id} onClick={()=>setActiveApp(a)} className="glass p-6 flex flex-col items-center app-card">
-                                        <span className="text-2xl mb-2">{a.i}</span>
-                                        <p className="text-[9px] font-black uppercase tracking-widest text-center">{a.name}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                <div class="box">
+                    <p style="margin-top:0; font-weight:bold;">Result:</p>
+                    <iframe id="result-frame"></iframe>
                 </div>
-            );
-        };
-        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-    </script>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Database of everything about HTML
+    const topics = {
+        home: {
+            title: "HTML Home",
+            desc: "HTML is the standard markup language for Web pages.",
+            code: "<!DOCTYPE html>\n<html>\n<body>\n\n<h1>Welcome to HTML</h1>\n<p>Start your coding journey here.</p>\n\n</body>\n</html>"
+        },
+        intro: {
+            title: "HTML Introduction",
+            desc: "HTML stands for Hyper Text Markup Language. It describes the structure of a Web page.",
+            code: "<!DOCTYPE html>\n<html>\n<body>\n\n<h1>What is HTML?</h1>\n<p>HTML is easy to learn!</p>\n\n</body>\n</html>"
+        },
+        elements: {
+            title: "HTML Elements",
+            desc: "An HTML element is defined by a start tag, some content, and an end tag.",
+            code: "<h1>My First Heading</h1>\n<p>My first paragraph.</p>"
+        },
+        attributes: {
+            title: "HTML Attributes",
+            desc: "All HTML elements can have attributes. They provide additional information about elements.",
+            code: "<a href='https://www.google.com'>This is a link</a>\n<img src='https://via.placeholder.com/150' width='150' height='150'>"
+        },
+        tables: {
+            title: "HTML Tables",
+            desc: "The &lt;table&gt; tag defines an HTML table.",
+            code: "<table border='1'>\n  <tr>\n    <th>Company</th>\n    <th>Contact</th>\n  </tr>\n  <tr>\n    <td>Alfreds</td>\n    <td>Maria Anders</td>\n  </tr>\n</table>"
+        },
+        forms: {
+            title: "HTML Forms",
+            desc: "The HTML &lt;form&gt; element is used to collect user input.",
+            code: "<form>\n  <label>First name:</label><br>\n  <input type='text' value='John'><br>\n  <label>Last name:</label><br>\n  <input type='text' value='Doe'><br><br>\n  <input type='submit' value='Submit'>\n</form>"
+        }
+    };
+
+    function loadTopic(key) {
+        const topic = topics[key];
+        document.getElementById('title').innerText = topic.title;
+        document.getElementById('desc').innerHTML = topic.desc;
+        document.getElementById('code-input').value = topic.code;
+        
+        // Update Active Sidebar
+        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        runCode();
+    }
+
+    function runCode() {
+        const code = document.getElementById('code-input').value;
+        const iframe = document.getElementById('result-frame');
+        const frameDoc = iframe.contentDocument || iframe.contentWindow.document;
+        frameDoc.open();
+        frameDoc.write(code);
+        frameDoc.close();
+    }
+
+    // Initialize the first view
+    window.onload = runCode;
+</script>
+
 </body>
 </html>
